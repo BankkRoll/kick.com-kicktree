@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Input } from './input';
-import { Badge } from './badge';
-import debounce from 'lodash.debounce';
-import Link from 'next/link';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Input } from "./input";
+import { Badge } from "./badge";
+import debounce from "lodash.debounce";
+import Link from "next/link";
 
 interface GameDocument {
   name: string;
@@ -31,34 +31,33 @@ interface Results {
 }
 
 const SearchBar = ({ className }: { className?: string }) => {
-  const [query, setQuery] = useState<string>('');
+  const [query, setQuery] = useState<string>("");
   const [results, setResults] = useState<Results[]>([]);
 
   const clearSearch = () => {
-  setQuery('');
-};
-
+    setQuery("");
+  };
 
   const debouncedFetchResults = debounce(async (searchQuery: string) => {
     try {
       const payload = {
         searches: [
-          { preset: 'category_search', q: searchQuery },
-          { preset: 'channel_search', q: searchQuery },
+          { preset: "category_search", q: searchQuery },
+          { preset: "channel_search", q: searchQuery },
         ],
       };
       const headers = {
-        'content-type': 'application/json',
-        'x-typesense-api-key': 'nXIMW0iEN6sMujFYjFuhdrSwVow3pDQu',
+        "content-type": "application/json",
+        "x-typesense-api-key": "nXIMW0iEN6sMujFYjFuhdrSwVow3pDQu",
       };
       const { data } = await axios.post(
-        'https://search.kick.com/multi_search',
+        "https://search.kick.com/multi_search",
         payload,
-        { headers },
+        { headers }
       );
       setResults(data.results);
     } catch (error) {
-      console.error('Error fetching search results:', error);
+      console.error("Error fetching search results:", error);
       // Handle error UI here
     }
   }, 300); // 300ms delay
@@ -77,7 +76,37 @@ const SearchBar = ({ className }: { className?: string }) => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search..."
-        icon={<img src="./search.svg" alt="Search" />}
+        icon={
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            x="0px"
+            y="0px"
+            width="20"
+            height="20"
+            viewBox="0,0,256,256"
+            className="m-auto"
+          >
+            <g
+              fill="#ffffff"
+              fillRule="nonzero"
+              stroke="none"
+              strokeWidth="1"
+              strokeLinecap="butt"
+              strokeLinejoin="miter"
+              strokeMiterlimit="10"
+              strokeDasharray=""
+              strokeDashoffset="0"
+              fontFamily="none"
+              fontWeight="none"
+              fontSize="none"
+              textAnchor="none"
+            >
+              <g transform="scale(5.12,5.12)">
+                <path d="M21,3c-9.39844,0 -17,7.60156 -17,17c0,9.39844 7.60156,17 17,17c3.35547,0 6.46094,-0.98437 9.09375,-2.65625l12.28125,12.28125l4.25,-4.25l-12.125,-12.09375c2.17969,-2.85937 3.5,-6.40234 3.5,-10.28125c0,-9.39844 -7.60156,-17 -17,-17zM21,7c7.19922,0 13,5.80078 13,13c0,7.19922 -5.80078,13 -13,13c-7.19922,0 -13,-5.80078 -13,-13c0,-7.19922 5.80078,-13 13,-13z" />
+              </g>
+            </g>
+          </svg>
+        }
       />
       <div>
         {query.length > 0 && (
@@ -105,7 +134,7 @@ const SearchBar = ({ className }: { className?: string }) => {
                     is_live: any;
                   };
                 },
-                index: React.Key | null | undefined,
+                index: React.Key | null | undefined
               ) => (
                 <Link
                   key={index}
@@ -117,9 +146,19 @@ const SearchBar = ({ className }: { className?: string }) => {
                     <div className="flex items-center">
                       <span>{hit.document.username}</span>
                       {hit.document.verified && (
-                      <svg className="text-kick-green" width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13.9925 7.0331L12.2948 5.60899L11.9088 3.42786H9.69394L7.99625 2L6.29856 3.42411H4.0837L3.69769 5.60525L2 7.0331L3.10931 8.95191L2.7233 11.133L4.807 11.8901L5.9163 13.8089L8 13.0518L10.0837 13.8089L11.193 11.8901L13.2767 11.133L12.8907 8.95191L14 7.0331H13.9925ZM6.86821 11.208L4.09119 8.42723L5.15178 7.36665L6.86821 9.08682L10.4622 5.49282L11.5228 6.5534L6.87195 11.2042L6.86821 11.208Z" fill="currentColor"/>
-                      </svg>
+                        <svg
+                          className="text-kick-green"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M13.9925 7.0331L12.2948 5.60899L11.9088 3.42786H9.69394L7.99625 2L6.29856 3.42411H4.0837L3.69769 5.60525L2 7.0331L3.10931 8.95191L2.7233 11.133L4.807 11.8901L5.9163 13.8089L8 13.0518L10.0837 13.8089L11.193 11.8901L13.2767 11.133L12.8907 8.95191L14 7.0331H13.9925ZM6.86821 11.208L4.09119 8.42723L5.15178 7.36665L6.86821 9.08682L10.4622 5.49282L11.5228 6.5534L6.87195 11.2042L6.86821 11.208Z"
+                            fill="currentColor"
+                          />
+                        </svg>
                       )}
                     </div>
                     <div className="flex items-center">
@@ -129,7 +168,7 @@ const SearchBar = ({ className }: { className?: string }) => {
                     </div>
                   </div>
                 </Link>
-              ),
+              )
             )}
 
             {/* For Games */}
@@ -155,7 +194,7 @@ const SearchBar = ({ className }: { className?: string }) => {
                     is_live: any;
                   };
                 },
-                index: React.Key | null | undefined,
+                index: React.Key | null | undefined
               ) => (
                 <Link
                   key={index}
@@ -177,7 +216,7 @@ const SearchBar = ({ className }: { className?: string }) => {
                     )}
                   </div>
                 </Link>
-              ),
+              )
             )}
           </div>
         )}
