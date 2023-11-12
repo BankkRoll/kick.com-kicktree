@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Fetch the channel data using API version 1
     const channelData = await kickApi.fetchChannelData(req.query.channelName as string, 'v1');
     res.status(200).json(channelData);
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 }
