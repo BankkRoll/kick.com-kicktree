@@ -140,7 +140,7 @@ interface ChannelData {
   chatroom: Chatroom;
   follower_badges: BadgeImage[];
   followersCount: number;
-  media: any[]; // Define a more specific type if possible
+  media: any[];
   muted: boolean;
   name_updated_at: string | null;
   offline_banner_image: BadgeImage;
@@ -157,26 +157,36 @@ interface ChannelData {
 }
 
 const ChannelPage = () => {
-    const [channelData, setChannelData] = useState<ChannelData | null>(null);
-    const router = useRouter();
-    const { slug } = router.query;
-    const [loading, setLoading] = useState(true);
-  
-    useEffect(() => {
+  const [channelData, setChannelData] = useState<ChannelData | null>(null);
+  const router = useRouter();
+  const { slug } = router.query;
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+
+  useEffect(() => {
+    if (slug) {
       setLoading(true);
-      if (slug) {
-        fetch(`/api/channel?channelName=${slug}`)
-          .then((response) => response.json())
-          .then((data) => {
-            if (data && data.id) {
-              setChannelData(data);
-            } else {
-              router.push('/404');
-            }
-          });
-      }
-      setLoading(false);
-    }, [slug, router]);
+      fetch(`/api/channel?channelName=${slug}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.id) {
+            setChannelData(data);
+            setLoading(false);
+          } else {
+            setNotFound(true);
+          }
+        })
+        .catch(() => {
+          setNotFound(true);
+        });
+    }
+  }, [slug]);
+
+  useEffect(() => {
+    if (notFound && !loading) {
+      router.push("/404");
+    }
+  }, [notFound, loading, router]);
 
   // Function to check if a string is a valid URL
   const isValidHttpUrl = (string: string | URL) => {
@@ -184,7 +194,7 @@ const ChannelPage = () => {
     try {
       url = new URL(string);
     } catch (_) {
-      return false; // If the URL constructor fails, the URL is invalid
+      return false;
     }
     return url.protocol === "http:" || url.protocol === "https:";
   };
@@ -219,7 +229,7 @@ const ChannelPage = () => {
           ) : (
             <div
               className="bg-kick-green mb-10 rounded-lg shadow-lg flex justify-center items-center"
-              style={{ height: "350px" }} // For mobile
+              style={{ height: "350px" }}
             >
               <img src="./animated.gif" alt="Logo" className="max-h-full" />
             </div>
