@@ -18,8 +18,5 @@ npm install
 # Run the project
 npm start
 ```
-or
-
-[![Run on Replit](https://repl.it/badge/github/BankkRoll/kick.com-kicktree)](https://repl.it/github/BankkRoll/kick.com-kicktree)
 
 ![imageedit_1_7453844623](https://github.com/BankkRoll/kick.com-kicktree/assets/106103625/c573eb8e-6b7b-45ec-9c7c-b71df8dcf1f2)
