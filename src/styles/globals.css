@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --font-primary: 'Inter';
+    --primary: hsl(240, 100%, 50%);
+    --primary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(120, 100%, 50%);
+    --secondary-foreground: hsl(0, 0%, 100%);
+    --destructive: hsl(0, 100%, 50%);
+    --destructive-foreground: hsl(0, 0%, 100%);
+    --muted: hsl(0, 0%, 60%);
+    --muted-foreground: hsl(0, 0%, 40%);
+    --accent: hsl(280, 100%, 50%);
+    --accent-foreground: hsl(0, 0%, 100%);
+    --popover: hsl(0, 0%, 95%);
+    --popover-foreground: hsl(0, 0%, 5%);
+    --card: hsl(0, 0%, 90%);
+    --card-foreground: hsl(0, 0%, 10%);
+    --border: hsl(0, 0%, 80%);
+    --input: hsl(0, 0%, 98%);
+    --ring: hsl(240, 50%, 60%);
+    --background: hsl(0, 0%, 100%);
+    --foreground: hsl(0, 0%, 0%);
+    --radius: 0.25rem;  /* 4px */
+    
+    /* Your custom grays and blacks */
+    --kick-gray: #24272c;
+    --kick-zinc: #191b1f;
+    --kick-slate: #0b0e0f;
+    --kick-green: #53fc18;
+    --kicklight-green: #43c914;
+  }
+  
+  /* Custom keyframes */
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+
+  .kick-light-opacity {
+    background-color: rgba(36, 39, 44, 0.5);
+  }
+
+  @font-face {
+    font-family: 'Inter', sans-serif;
+    src: url('https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7SUc.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+  }
+  
+    @font-face {
+    font-family: 'Inter', sans-serif;
+    src: url('https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7SUc.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+  }
+  
+
+  * {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  .fonted {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+  }
+
+  .tabs-trigger-active {
+    border-bottom-width: 0px;
+  }
+  
+  .tabs-trigger-active[data-state='active'] {
+    border-bottom-width: 2px;
+    border-color: #53fc18;
+  }
+
+  .dropdown {
+    position: fixed;
+    width: 300px;
+    margin-top: 4px;
+    border-radius: 4px;
+    background-color: #24272c;
+    z-index: 9999;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding-bottom: 4px;
+    padding-top: 4px;
+  }
+
+  .dropdown .hover-div {
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    cursor: pointer;
+  }
+  
+  .dropdown .hover-div:hover {
+    background-color: #191b1f;
+  }
+  
+
+
+  .loader-wrapper {
+    position: relative;
+    width: 64px;
+    height: 64px;
+  }
+  
+  .loader {
+    position: absolute;
+    border: 4px solid rgba(2, 2, 2, 0.3);
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    animation: spin 1.5s linear infinite;
+  }
+  
+  .loader-inner {
+    position: absolute;
+    border: 4px solid rgba(2, 2, 2, 0.3); /* Background Circle */
+    border-top: 4px solid #53fc18; /* Green Color for the loader */
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    animation: spin 1.5s linear infinite;
+  }
+  
+  .loader-inner:nth-child(1) {
+    animation-delay: 0s;
+  }
+  .loader-inner:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  .loader-inner:nth-child(3) {
+    animation-delay: -1s;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+
+  
+  .slider-thumb::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--webkit-slider-thumb, #53fc18);
+  }
+  
+  .slider-thumb::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--moz-range-thumb, #53fc18);
+  }
+  
+  
