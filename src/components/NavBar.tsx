@@ -13,7 +13,7 @@ export function CustomNavbar() {
       {/* Desktop Navbar */}
       <nav className="hidden md:flex bg-kick-gray text-white w-full justify-between items-center p-4">
         <Link href="/" passHref>
-          <img src="/KickBetaIcon.svg" alt="Logo" className="cursor-pointer" />
+          <img src="./KickBetaIcon.svg" alt="Logo" className="cursor-pointer" />
         </Link>
 
         <SearchBar />
@@ -23,7 +23,7 @@ export function CustomNavbar() {
       <nav className="md:hidden flex bg-kick-gray text-white w-full justify-between items-center p-4">
         <Link href="/" passHref>
           <img
-            src="/KickIcon.svg"
+            src="./KickIcon.svg"
             alt="Logo"
             className="h-8 w-auto cursor-pointer"
           />

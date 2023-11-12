@@ -221,7 +221,7 @@ const ChannelPage = () => {
               className="bg-kick-green mb-10 rounded-lg shadow-lg flex justify-center items-center"
               style={{ height: "350px" }} // For mobile
             >
-              <img src="/animated.gif" alt="Logo" className="max-h-full" />
+              <img src="./animated.gif" alt="Logo" className="max-h-full" />
             </div>
           )}
 

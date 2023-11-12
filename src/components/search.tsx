@@ -77,7 +77,7 @@ const SearchBar = ({ className }: { className?: string }) => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search..."
-        icon={<img src="/search.svg" alt="Search" />}
+        icon={<img src="./search.svg" alt="Search" />}
       />
       <div>
         {query.length > 0 && (
