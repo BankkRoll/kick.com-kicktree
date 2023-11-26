@@ -6,9 +6,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const kickApi = new KickApiWrapper({
       apiVersion: 'v1',
-      puppeteer: {
-        executablePath: await chromium.executablePath,
-      },
     });
 
     const featuredStreams = await kickApi.fetchFeaturedLivestreams('en');
