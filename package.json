@@ -18,7 +18,7 @@
     "axios": "^1.6.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "kick.com-api": "^0.1.64",
+    "kick.com-api": "^0.1.65",
     "lodash.debounce": "^4.0.8",
     "next": "14.0.2",
     "next-themes": "^0.2.1",
