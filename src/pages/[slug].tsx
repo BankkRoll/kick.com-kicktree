@@ -140,7 +140,7 @@ interface ChannelData {
   chatroom: Chatroom;
   follower_badges: BadgeImage[];
   followersCount: number;
-  media: any[]; // Define a more specific type if possible
+  media: any[];
   muted: boolean;
   name_updated_at: string | null;
   offline_banner_image: BadgeImage;
@@ -155,6 +155,15 @@ interface ChannelData {
   verified: boolean;
   vod_enabled: boolean;
 }
+
+const socialLinks = {
+  instagram: "https://instagram.com/",
+  twitter: "https://twitter.com/",
+  youtube: "https://youtube.com/",
+  discord: "https://discord.com/",
+  tiktok: "https://tiktok.com/@",
+  facebook: "https://facebook.com/",
+};
 
 const ChannelPage = () => {
   const [channelData, setChannelData] = useState<ChannelData | null>(null);
@@ -188,13 +197,12 @@ const ChannelPage = () => {
     }
   }, [notFound, loading, router]);
 
-  // Function to check if a string is a valid URL
   const isValidHttpUrl = (string: string | URL) => {
     let url;
     try {
       url = new URL(string);
     } catch (_) {
-      return false; // If the URL constructor fails, the URL is invalid
+      return false;
     }
     return url.protocol === "http:" || url.protocol === "https:";
   };
@@ -216,7 +224,6 @@ const ChannelPage = () => {
     <div className="container mx-auto px-4 py-8">
       {channelData && (
         <>
-          {/* Banner Image */}
           {channelData ? (
             <iframe
               src={`https://player.kick.com/${channelData.slug}`}
@@ -229,7 +236,7 @@ const ChannelPage = () => {
           ) : (
             <div
               className="bg-kick-green mb-10 rounded-lg shadow-lg flex justify-center items-center"
-              style={{ height: "350px" }} // For mobile
+              style={{ height: "350px" }}
             >
               <img src="./animated.gif" alt="Logo" className="max-h-full" />
             </div>
@@ -242,56 +249,84 @@ const ChannelPage = () => {
                 alt={channelData.user.username}
                 className="rounded-full w-32 h-32 lg:w-48 lg:h-48 border-4 border-white shadow-md"
               />
-              <div className="mt-4 lg:mt-0 lg:ml-8 text-center lg:text-left">
-                <h1 className="text-3xl lg:text-4xl font-bold text-gray-800">
-                  {channelData.user.username}
-                </h1>
-                <p className="text-gray-600 mt-2">{channelData.user.bio}</p>
-                <div className="flex flex-wrap justify-center lg:justify-start gap-3 mt-4 items-center">
-                  {channelData.verified && (
-                    <span className="flex items-center justify-center bg-black rounded-full p-1">
-                      <svg
-                        className="text-kick-green w-16 h-16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M13.9925 7.0331L12.2948 5.60899L11.9088 3.42786H9.69394L7.99625 2L6.29856 3.42411H4.0837L3.69769 5.60525L2 7.0331L3.10931 8.95191L2.7233 11.133L4.807 11.8901L5.9163 13.8089L8 13.0518L10.0837 13.8089L11.193 11.8901L13.2767 11.133L12.8907 8.95191L14 7.0331H13.9925ZM6.86821 11.208L4.09119 8.42723L5.15178 7.36665L6.86821 9.08682L10.4622 5.49282L11.5228 6.5534L6.87195 11.2042L6.86821 11.208Z"
-                          fill="currentColor"
-                        />
-                      </svg>
-                    </span>
-                  )}
-                  <span className="bg-black text-kick-green py-1 px-3 rounded-full text-md">
+
+              <div className="mt-4 lg:mt-0 lg:ml-8 text-center lg:text-left flex flex-col items-center lg:items-start">
+                <div className="flex flex-col lg:flex-row items-center">
+                  <div className="flex items-center mb-2 lg:mb-0">
+                    <h1 className="text-3xl lg:text-4xl font-bold text-black mr-2">
+                      {channelData.user.username}
+                    </h1>
+                    {channelData.verified && (
+                      <span className="flex items-center justify-center bg-black rounded-full p-0.5">
+                        <svg
+                          className="text-kick-green w-8 h-8"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M13.9925 7.0331L12.2948 5.60899L11.9088 3.42786H9.69394L7.99625 2L6.29856 3.42411H4.0837L3.69769 5.60525L2 7.0331L3.10931 8.95191L2.7233 11.133L4.807 11.8901L5.9163 13.8089L8 13.0518L10.0837 13.8089L11.193 11.8901L13.2767 11.133L12.8907 8.95191L14 7.0331H13.9925ZM6.86821 11.208L4.09119 8.42723L5.15178 7.36665L6.86821 9.08682L10.4622 5.49282L11.5228 6.5534L6.87195 11.2042L6.86821 11.208Z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </span>
+                    )}
+                  </div>
+                  <span className="bg-black text-kick-green py-1 px-3 rounded-full text-md md:ml-2">
                     Followers: {channelData.followersCount}
                   </span>
                 </div>
+
+                <p className="text-gray-600 mt-2 lg:ml-8">
+                  {channelData.user.bio}
+                </p>
               </div>
             </div>
 
-            <div className="lg:col-span-1 flex flex-col items-center lg:items-start justify-center lg:justify-start mb-4 lg:mb-0">
-              {channelData.ascending_links.map((link) => (
-                <a
-                  key={link.id}
-                  href={link.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-black block hover:scale-105 transition-transform mb-1"
-                >
-                  <span>
-                    {isValidHttpUrl(link.link)
-                      ? new URL(link.link).hostname
-                      : link.title}
-                  </span>
-                </a>
-              ))}
+            <div className="lg:col-span-1 grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div className="flex flex-col space-y-2">
+                {channelData?.ascending_links?.map((link) => {
+                  const isValidLink = link.link && isValidHttpUrl(link.link);
+                  return (
+                    isValidLink && (
+                      <a
+                        key={link.id}
+                        href={link.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-start px-4 py-2 border border-black text-sm font-medium rounded-md text-black bg-transparent hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition duration-150 ease-in-out w-full"
+                      >
+                        {new URL(link.link).hostname}
+                      </a>
+                    )
+                  );
+                })}
+              </div>
+
+              <div className="flex flex-col space-y-2">
+                {Object.entries(socialLinks).map(([key, url]) => {
+                  const link = channelData?.user?.[key as keyof User];
+                  return (
+                    link && (
+                      <a
+                        key={key}
+                        href={`${url}${link}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-start px-4 py-2 border border-black text-sm font-medium rounded-md text-black bg-transparent hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition duration-150 ease-in-out w-full"
+                      >
+                        {key.charAt(0).toUpperCase() + key.slice(1)}
+                      </a>
+                    )
+                  );
+                })}
+              </div>
             </div>
           </div>
 
           <div className="mb-8">
             <div className="flex flex-wrap justify-center gap-4">
-              {channelData.subscriber_badges.map((badge) => (
+              {channelData?.subscriber_badges?.map((badge) => (
                 <img
                   key={badge.id}
                   src={badge.badge_image.src}
@@ -305,7 +340,7 @@ const ChannelPage = () => {
           <div className="mb-8">
             <h2 className="text-2xl font-bold">Recent Livestreams:</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {channelData.previous_livestreams.map((livestream) => (
+              {channelData?.previous_livestreams?.map((livestream) => (
                 <Link
                   href={`https://kick.com/video/${livestream.video.uuid}`}
                   key={livestream.id}
